@@ -36,7 +36,7 @@ jobs:
       - run: npm ci
       - run: npm run build
         env: 
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          VUE_APP_OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
