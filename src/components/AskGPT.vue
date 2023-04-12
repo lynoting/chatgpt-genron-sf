@@ -2,11 +2,11 @@
   <body>
     <div>
       <header>
-        <h1 class="mb-1">Genron SF - ask to GPT</h1>
+        <h1 class="mb-1">OpenAIに聞いてみよう〜</h1>
         <div class="btn-group m-3" role="group" aria-label="Basic example">
           <button
             type="button"
-            class="btn btn-sm"
+            class="btn"
             :class="
               screenMode === 'summary' ? 'btn-primary' : 'btn-outline-primary'
             "
@@ -16,7 +16,7 @@
           </button>
           <button
             type="button"
-            class="btn btn-sm"
+            class="btn"
             :class="
               screenMode === 'title' ? 'btn-primary' : 'btn-outline-primary'
             "
@@ -26,7 +26,7 @@
           </button>
           <button
             type="button"
-            class="btn btn-sm"
+            class="btn"
             :class="
               screenMode === 'opening' ? 'btn-primary' : 'btn-outline-primary'
             "
@@ -45,7 +45,7 @@
                 <!-- 梗概 -->
                 <div class="form-group" v-if="screenMode === 'summary'">
                   <label for="exampleFormControlInput1" class="form-label"
-                    >作品の梗概を入力してね（1200文字まで） 。</label
+                    >作品の梗概を入力してね 。</label
                   >
                   <textarea
                     class="form-control m-1"
@@ -55,12 +55,18 @@
                   ></textarea>
                   <button
                     type="button"
-                    class="btn btn-outline-primary btn-sm m-1"
+                    class="btn btn-outline-primary m-3"
                     @click="askSummaryComment"
                   >
                     梗概にコメントしてもらおう〜
                   </button>
+                  <loading
+                    v-model:active="isLoading"
+                    :can-cancel="false"
+                    :is-full-page="fullPage"
+                  />
                   <p
+                    v-show="!isLoading"
                     class="text-md-left newline"
                     style="
                       text-align: left;
@@ -85,12 +91,18 @@
                   ></textarea>
                   <button
                     type="button"
-                    class="btn btn-outline-primary btn-sm m-1"
+                    class="btn btn-outline-primary m-3"
                     @click="askTitleComment"
                   >
                     タイトルにコメントしてもらおう〜
                   </button>
+                  <loading
+                    v-model:active="isLoading"
+                    :can-cancel="false"
+                    :is-full-page="fullPage"
+                  />
                   <p
+                    v-show="!isLoading"
                     class="text-md-left newline"
                     style="
                       text-align: left;
@@ -105,21 +117,28 @@
                 <!-- 実作の冒頭 -->
                 <div class="form-group" v-if="screenMode === 'opening'">
                   <label for="exampleFormControlInput1" class="form-label"
-                    >実作の冒頭を入力してね（1200文字まで）。</label
+                    >実作の冒頭を入力してね。</label
                   >
                   <textarea
                     class="form-control m-1"
                     id="exampleFormControlTextarea1"
                     rows="3"
+                    v-model="userInput.opening"
                   ></textarea>
                   <button
                     type="button"
-                    class="btn btn-outline-primary btn-sm m-1"
+                    class="btn btn-outline-primary m-3"
                     @click="askOpeningComment"
                   >
                     実作の書き出しにコメントしてもらおう〜
                   </button>
+                  <loading
+                    v-model:active="isLoading"
+                    :can-cancel="false"
+                    :is-full-page="fullPage"
+                  />
                   <p
+                    v-show="!isLoading"
                     class="text-md-left newline"
                     style="
                       text-align: left;
@@ -142,11 +161,15 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/css/index.css";
 
 export default defineComponent({
   data() {
     return {
       screenMode: "summary",
+      isLoading: false,
+      fullPage: true,
       answer: {
         summary: "",
         title: "",
@@ -155,6 +178,7 @@ export default defineComponent({
       params: {
         model: "gpt-3.5-turbo",
         temperature: 0.8,
+        fetchURL: "https://api.openai.com/v1/chat/completions",
         summaryPromptMessage: [
           {
             role: "system",
@@ -162,7 +186,6 @@ export default defineComponent({
               "以下の条件に従ってロールプレイせよ。あなたは凄腕の書評家・O氏であり、小説のプロットを読んでどのような感想や問題点を抱いたか出力する。決して小説を書いてはいけない。翻訳をしてもいけない。文末に「です」「ます」を使ってはいけない。#出力フォーマット :\n出力形式は以下のフォーマットとせよ。\n\n【ストーリーの独創性・面白さ】\n\n【設定・世界観の独創性・面白さ】\n\n【ストーリーを改善するには】\n\n【設定・世界観を改善するには】\n\n【キャラクターを改善するには】\n\n以下にプロット本文を提示する。\n\n&1",
           },
         ],
-
         // summaryPromptMessage: [{ role: "system", content: "good morning!" }],
         titlePromptMessage: [
           {
@@ -184,13 +207,27 @@ export default defineComponent({
         title: "",
         opening: "",
       },
+      message:{
+          userNoInput: "入力してから訊いてね。",
+          takingTime: "わりと時間がかかります・・・"
+        }
     };
   },
-
+  components: {
+    Loading,
+  },
+  watch:{
+    'userInput.summary': function(input){
+      this.userInput.summary = this.limitLength(input, 1200);
+    },
+    'userInput.title': function(input){
+      this.userInput.title =this.limitLength(input, 50);
+    },
+    'userInput.opening': function(input){
+      this.userInput.opening =this.limitLength(input, 1200);
+    },
+  },
   methods: {
-    /**
-     * タブ切り替え
-     */
     onClickSummaryTab() {
       this.screenMode = "summary";
     },
@@ -200,7 +237,14 @@ export default defineComponent({
     onClickOpeningTab() {
       this.screenMode = "opening";
     },
-
+    limitLength(input:string, maxLength:number){
+      return input.length > maxLength ? input.slice(0, maxLength-1) : input;
+    },
+    /**
+     * プロンプトメッセージの編集
+     * @param PromptMessage 
+     * @param userInput 
+     */
     editPromptMessage(PromptMessage: object[], userInput: string) {
       const PromptString = JSON.stringify(PromptMessage[0]);
       // プロンプトにユーザの入力値を挿入
@@ -215,8 +259,10 @@ export default defineComponent({
     askSummaryComment() {
       if (!this.userInput.summary) {
         console.log("user has not input text");
+        this.answer.summary = this.message.userNoInput;
         return;
       }
+      this.answer.summary = this.message.takingTime;
       this.askGPT(
         "summary",
         this.params.model,
@@ -232,10 +278,11 @@ export default defineComponent({
      */
     askTitleComment() {
       if (!this.userInput.title) {
-        console.log(this.userInput.title);
         console.log("user has not input text");
+        this.answer.title = this.message.userNoInput;
         return;
       }
+      this.answer.title = this.message.takingTime;
       this.askGPT(
         "title",
         this.params.model,
@@ -250,10 +297,12 @@ export default defineComponent({
      * 冒頭コメント
      */
     askOpeningComment() {
-      if (!this.userInput.summary) {
+      if (!this.userInput.opening) {
         console.log("user has not input text");
+        this.answer.opening = this.message.userNoInput;
         return;
       }
+      this.answer.opening = this.message.takingTime;
       this.askGPT(
         "opening",
         this.params.model,
@@ -273,6 +322,7 @@ export default defineComponent({
       messages: object[],
       temperature: number
     ) {
+      this.isLoading = true;
       console.log("start querying...");
       const requestOptions = {
         method: "POST",
@@ -286,18 +336,19 @@ export default defineComponent({
           temperature: temperature,
           top_p: 1,
           n: 1,
-          stream: false, //If set, partial message deltas will be sent, like in ChatGPT.
+          stream: false,
           frequency_penalty: 0,
           presence_penalty: 0.5,
           stop: ['"""'],
         }),
       };
-      fetch("https://api.openai.com/v1/chat/completions", requestOptions)
+      fetch(this.params.fetchURL, requestOptions)
         .then((response) => response.json())
         .then((data) => {
           console.log("the answer is: " + JSON.stringify(data));
           let answerData = data["choices"][0]["message"]["content"];
           console.log("the answer is: " + answerData);
+          this.isLoading = false;
           //dataを更新
           switch (type) {
             case "summary":
@@ -316,6 +367,7 @@ export default defineComponent({
           return answerData;
         })
         .catch((err) => {
+          this.isLoading = false;
           console.log("the error message is: " + err);
           return err;
         });
@@ -326,16 +378,7 @@ export default defineComponent({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-header {
-}
 h1 {
   color: #48c1ec;
 }
-body {
-}
-/* p.new-line {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  text-align: left;
-} */
 </style>

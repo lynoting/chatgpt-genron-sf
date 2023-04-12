@@ -9,8 +9,8 @@ import AskGPT from './components/AskGPT.vue';
 
 @Options({
   components: {
-    AskGPT,
-  },
+    AskGPT
+    },
 })
 export default class App extends Vue {}
 </script>
