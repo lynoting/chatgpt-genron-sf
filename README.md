@@ -1,24 +1,7 @@
-# chatgpt-genron-sf
+# OpenAIに小説について訊いてみる
 
-## Project setup
-```
-npm install
-```
+https://lynoting.github.io/chatgpt-genron-sf/
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- 作品の梗概について
+- 作品のタイトルについて
+- 作品の書き出しについて
