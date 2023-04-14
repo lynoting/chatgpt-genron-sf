@@ -13,7 +13,7 @@
             "
             @click="onClickSummaryTab"
           >
-            梗概
+          &emsp;梗概&emsp;
           </button>
           <button
             type="button"
