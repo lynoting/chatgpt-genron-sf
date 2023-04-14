@@ -2,7 +2,7 @@
   <body>
     <div id="wrapper">
       <header>
-        <img src="../assets/logo.png" class="img-fluid m-3" alt="">
+        <img src="../assets/logo.png" class="img-fluid m-3" alt="" />
         <h2 class="mb-1">OpenAIに聞いてみよう〜</h2>
         <div class="btn-group m-3" role="group" aria-label="Basic example">
           <button
@@ -13,7 +13,7 @@
             "
             @click="onClickSummaryTab"
           >
-          &emsp;梗概&emsp;
+            &emsp;梗概&emsp;
           </button>
           <button
             type="button"
@@ -39,119 +39,121 @@
       </header>
       <div class="container">
         <div class="row">
-              <div class="col-md-1"></div>
-              <div class="col-md-10 text-center">
-                <!-- 梗概 -->
-                <div class="form-group" v-if="screenMode === 'summary'">
-                  <label for="exampleFormControlInput1" class="form-label"
-                    >作品の梗概を入力してね 。</label
-                  >
-                  <textarea
-                    class="form-control m-1"
-                    id="exampleFormControlTextarea1"
-                    rows="3"
-                    v-model="userInput.summary"
-                  ></textarea>
-                  <button
-                    type="button"
-                    class="btn btn-outline-primary m-3"
-                    @click="askSummaryComment"
-                  >
-                    梗概にコメントしてもらおう〜
-                  </button>
-                  <loading
-                    v-model:active="isLoading"
-                    :can-cancel="false"
-                    :is-full-page="fullPage"
-                  />
-                  <p
-                    v-show="!isLoading"
-                    class="text-md-left newline"
-                    style="
-                      text-align: left;
-                      white-space: pre-wrap;
-                      word-wrap: break-word;
-                    "
-                  >
-                    {{ answer.summary }}
-                  </p>
-                </div>
+          <div class="col-md-1"></div>
+          <div class="col-md-10 text-center">
+            <!-- 梗概 -->
+            <div class="form-group" v-if="screenMode === 'summary'">
+              <label class="form-label">作品の梗概を入力してね 。</label>
+              <textarea
+                class="form-control m-1"
+                rows="3"
+                v-model="userInput.summary"
+                placeholder="1200文字まで"
+              ></textarea>
+              <button
+                type="button"
+                class="btn btn-outline-primary m-3"
+                @click="askSummaryComment"
+              >
+                梗概にコメントしてもらおう〜
+              </button>
+              <loading
+                v-model:active="isLoading"
+                :can-cancel="false"
+                :is-full-page="fullPage"
+              />
+              <p
+                class="text-md-left"
+                style="
+                  text-align: left;
+                  white-space: pre-wrap;
+                  word-wrap: break-word;
+                "
+              >
+                {{ answer.summary }}
+              </p>
+            </div>
 
-                <!-- タイトル -->
-                <div class="form-group" v-if="screenMode === 'title'">
-                  <label for="exampleFormControlInput1" class="form-label"
-                    >作品のタイトルを入力してね。</label
-                  >
-                  <textarea
-                    class="form-control m-1"
-                    id="exampleFormControlTextarea1"
-                    rows="3"
-                    v-model="userInput.title"
-                  ></textarea>
-                  <button
-                    type="button"
-                    class="btn btn-outline-primary m-3"
-                    @click="askTitleComment"
-                  >
-                    タイトルにコメントしてもらおう〜
-                  </button>
-                  <loading
-                    v-model:active="isLoading"
-                    :can-cancel="false"
-                    :is-full-page="fullPage"
-                  />
-                  <p
-                    v-show="!isLoading"
-                    class="text-md-left newline"
-                    style="
-                      text-align: left;
-                      white-space: pre-wrap;
-                      word-wrap: break-word;
-                    "
-                  >
-                    {{ answer.title }}
-                  </p>
-                </div>
+            <!-- タイトル -->
+            <div class="form-group" v-if="screenMode === 'title'">
+              <label class="form-label">作品のタイトルを入力してね。</label>
+              <textarea
+                class="form-control m-1"
+                rows="3"
+                v-model="userInput.title"
+                placeholder="50文字まで"
+              ></textarea>
+              <button
+                type="button"
+                class="btn btn-outline-primary m-3"
+                @click="askTitleComment"
+              >
+                タイトルにコメントしてもらおう〜
+              </button>
+              <loading
+                v-model:active="isLoading"
+                :can-cancel="false"
+                :is-full-page="fullPage"
+              />
+              <p
+                class="text-md-left"
+                style="
+                  text-align: left;
+                  white-space: pre-wrap;
+                  word-wrap: break-word;
+                "
+              >
+                {{ answer.title }}
+              </p>
+            </div>
 
-                <!-- 実作の冒頭 -->
-                <div class="form-group" v-if="screenMode === 'opening'">
-                  <label for="exampleFormControlInput1" class="form-label"
-                    >実作の冒頭を入力してね。</label
-                  >
-                  <textarea
-                    class="form-control m-1"
-                    id="exampleFormControlTextarea1"
-                    rows="3"
-                    v-model="userInput.opening"
-                  ></textarea>
-                  <button
-                    type="button"
-                    class="btn btn-outline-primary m-3"
-                    @click="askOpeningComment"
-                  >
-                    実作の書き出しにコメントしてもらおう〜
-                  </button>
-                  <loading
-                    v-model:active="isLoading"
-                    :can-cancel="false"
-                    :is-full-page="fullPage"
-                  />
-                  <p
-                    v-show="!isLoading"
-                    class="text-md-left newline"
-                    style="
-                      text-align: left;
-                      white-space: pre-wrap;
-                      word-wrap: break-word;
-                    "
-                  >
-                    {{ answer.opening }}
-                  </p>
-                </div>
-                <div class="col-md-1"></div>
-              </div>
+            <!-- 実作の冒頭 -->
+            <div class="form-group" v-if="screenMode === 'opening'">
+              <label class="form-label">実作の冒頭を入力してね。</label>
+              <textarea
+                class="form-control m-1"
+                rows="3"
+                v-model="userInput.opening"
+                placeholder="1200文字まで"
+              ></textarea>
+              <button
+                type="button"
+                class="btn btn-outline-primary m-3"
+                @click="askOpeningComment"
+              >
+                実作の書き出しにコメントしてもらおう〜
+              </button>
+              <loading
+                v-model:active="isLoading"
+                :can-cancel="false"
+                :is-full-page="fullPage"
+              />
+              <p
+                class="text-md-left"
+                style="
+                  text-align: left;
+                  white-space: pre-wrap;
+                  word-wrap: break-word;
+                "
+              >
+                {{ answer.opening }}
+              </p>
+            </div>
+            <div class="col-md-1"></div>
+          </div>
         </div>
       </div>
+      <footer class="text-center text-lg-start">
+        <div class="text-center p-4">
+          <a class="text-reset" target="_blank" :href="`${links.twitter}`"
+            ><small>©︎kkhaiya</small></a
+          >
+          <br />
+          <a class="text-reset" target="_blank" :href="`${links.about}`"
+            ><small>このサイトについて</small></a
+          >
+        </div>
+      </footer>
     </div>
   </body>
 </template>
@@ -204,24 +206,31 @@ export default defineComponent({
         title: "",
         opening: "",
       },
-      message:{
-          userNoInput: "入力してから訊いてね。",
-          takingTime: "わりと時間がかかります・・・"
-        }
+      message: {
+        userNoInput: "入力してから訊いてね。",
+        takingTime: "※わりと時間がかかります（最大数分くらい・・・）",
+        error:
+          "ごめんなさい、なんらかの問題が発生しました。もう一度試してみたら直るかもしれません。あるいは時間をおかないとダメかもしれません。",
+      },
+      links: {
+        about:
+          "https://skawano.notion.site/OpenAI-8929e1563a0147c19f3460c37d3c3e4f",
+        twitter: "https://twitter.com/kkhaiya",
+      },
     };
   },
   components: {
     Loading,
   },
-  watch:{
-    'userInput.summary': function(input){
+  watch: {
+    "userInput.summary": function (input) {
       this.userInput.summary = this.limitLength(input, 1200);
     },
-    'userInput.title': function(input){
-      this.userInput.title =this.limitLength(input, 50);
+    "userInput.title": function (input) {
+      this.userInput.title = this.limitLength(input, 50);
     },
-    'userInput.opening': function(input){
-      this.userInput.opening =this.limitLength(input, 1200);
+    "userInput.opening": function (input) {
+      this.userInput.opening = this.limitLength(input, 1200);
     },
   },
   methods: {
@@ -234,13 +243,13 @@ export default defineComponent({
     onClickOpeningTab() {
       this.screenMode = "opening";
     },
-    limitLength(input:string, maxLength:number){
-      return input.length > maxLength ? input.slice(0, maxLength-1) : input;
+    limitLength(input: string, maxLength: number) {
+      return input.length > maxLength ? input.slice(0, maxLength - 1) : input;
     },
     /**
      * プロンプトメッセージの編集
-     * @param PromptMessage 
-     * @param userInput 
+     * @param PromptMessage
+     * @param userInput
      */
     editPromptMessage(PromptMessage: object[], userInput: string) {
       const PromptString = JSON.stringify(PromptMessage[0]);
@@ -344,7 +353,6 @@ export default defineComponent({
         .then((data) => {
           console.log("the answer is: " + JSON.stringify(data));
           let answerData = data["choices"][0]["message"]["content"];
-          console.log("the answer is: " + answerData);
           this.isLoading = false;
           //dataを更新
           switch (type) {
@@ -366,6 +374,22 @@ export default defineComponent({
         .catch((err) => {
           this.isLoading = false;
           console.log("the error message is: " + err);
+          const errorMessage = this.message.error + "\ndetail: " + err;
+          //dataを更新
+          switch (type) {
+            case "summary":
+              this.answer.summary = errorMessage
+              break;
+            case "title":
+              this.answer.title = errorMessage;
+              break;
+            case "opening":
+              this.answer.opening = errorMessage;
+              break;
+            default:
+              console.log("something is wrong in setting answer");
+              return;
+          }
           return err;
         });
     },
@@ -376,30 +400,31 @@ export default defineComponent({
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h2 {
-  color: #3F7A63;
+  color: #3f7a63;
 }
-body{
-  color:#3F7A63
+body {
+  color: #3f7a63;
 }
-#wrapper{
-  background-color:#F29089;
+#wrapper {
+  background-color: #f29089;
 }
 .btn-primary {
-    background: #3F7A63;
-    border-color: #3F7A63;
-    color: #F29089;
+  background: #3f7a63;
+  border-color: #3f7a63;
+  color: #f29089;
 }
 .btn-outline-primary {
-    background: none;
-    border-color: #3F7A63;
-    color: #3F7A63;
+  background: none;
+  border-color: #3f7a63;
+  color: #3f7a63;
 }
-.btn-primary:hover, .btn-outline-primary:hover{
-    background: #3F7A63;
-    border-color: #3F7A63;
-    color: #F29089;
+.btn-primary:hover,
+.btn-outline-primary:hover {
+  background: #3f7a63;
+  border-color: #3f7a63;
+  color: #f29089;
 }
-.img-fluid{
+.img-fluid {
   width: 100px;
 }
 </style>
