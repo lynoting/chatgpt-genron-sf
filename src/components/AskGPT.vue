@@ -3,7 +3,7 @@
     <div id="wrapper">
       <header>
         <img src="../assets/logo.png" class="img-fluid m-3" alt="">
-        <h1 class="mb-1">OpenAIに聞いてみよう〜</h1>
+        <h2 class="mb-1">OpenAIに聞いてみよう〜</h2>
         <div class="btn-group m-3" role="group" aria-label="Basic example">
           <button
             type="button"
@@ -375,9 +375,8 @@ export default defineComponent({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1 {
+h2 {
   color: #3F7A63;
-  font-size : 36px; 
 }
 body{
   color:#3F7A63
