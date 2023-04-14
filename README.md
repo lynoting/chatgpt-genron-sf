@@ -1,6 +1,6 @@
 # OpenAIに小説について訊いてみる
 
-https://lynoting.github.io/chatgpt-genron-sf/
+https://lynoting.github.io/openai-and-fiction/
 
 - 作品の梗概について
 - 作品のタイトルについて

@@ -1,5 +1,5 @@
 {
-  "name": "chatgpt-genron-sf",
+  "name": "openai-and-fiction",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -57,13 +57,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lynoting/chatgpt-genron-sf.git"
+    "url": "git+https://github.com/lynoting/openai-and-fiction.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/lynoting/chatgpt-genron-sf/issues"
+    "url": "https://github.com/lynoting/openai-and-fiction/issues"
   },
-  "homepage": "https://github.com/lynoting/chatgpt-genron-sf#readme"
+  "homepage": "https://github.com/lynoting/openai-and-fiction#readme"
 }
