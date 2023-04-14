@@ -1,6 +1,6 @@
 <template>
   <body>
-    <div>
+    <div id="wrapper">
       <header>
         <h1 class="mb-1">OpenAIに聞いてみよう〜</h1>
         <div class="btn-group m-3" role="group" aria-label="Basic example">
@@ -36,12 +36,10 @@
           </button>
         </div>
       </header>
-      <div class="container-fluid">
+      <div class="container">
         <div class="row">
-          <form>
-            <div class="mb-3 form-group">
               <div class="col-md-1"></div>
-              <div class="col-md-10">
+              <div class="col-md-10 text-center">
                 <!-- 梗概 -->
                 <div class="form-group" v-if="screenMode === 'summary'">
                   <label for="exampleFormControlInput1" class="form-label"
@@ -151,8 +149,6 @@
                 </div>
                 <div class="col-md-1"></div>
               </div>
-            </div>
-          </form>
         </div>
       </div>
     </div>
@@ -379,6 +375,28 @@ export default defineComponent({
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1 {
-  color: #48c1ec;
+  color: #3F7A63;
 }
+body{
+  color:#3F7A63
+}
+#wrapper{
+  background-color:#F29089;
+}
+.btn-primary {
+    background: #3F7A63;
+    border-color: #3F7A63;
+    color: #F29089;
+}
+.btn-outline-primary {
+    background: none;
+    border-color: #3F7A63;
+    color: #3F7A63;
+}
+.btn-primary:hover, .btn-outline-primary:hover{
+    background: #3F7A63;
+    border-color: #3F7A63;
+    color: #F29089;
+}
+
 </style>

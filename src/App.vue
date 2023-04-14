@@ -24,4 +24,8 @@ export default class App extends Vue {}
   color: #2c3e50;
   margin-top: 60px;
 }
+html, body{
+  background-color:#F29089;
+}
+
 </style>
