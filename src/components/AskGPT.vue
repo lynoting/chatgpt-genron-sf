@@ -2,6 +2,7 @@
   <body>
     <div id="wrapper">
       <header>
+        <img src="../assets/logo.png" class="img-fluid m-3" alt="">
         <h1 class="mb-1">OpenAIに聞いてみよう〜</h1>
         <div class="btn-group m-3" role="group" aria-label="Basic example">
           <button
@@ -376,6 +377,7 @@ export default defineComponent({
 <style scoped>
 h1 {
   color: #3F7A63;
+  font-size : 36px; 
 }
 body{
   color:#3F7A63
@@ -398,5 +400,7 @@ body{
     border-color: #3F7A63;
     color: #F29089;
 }
-
+.img-fluid{
+  width: 100px;
+}
 </style>
