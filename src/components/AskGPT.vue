@@ -164,7 +164,7 @@ import "vue-loading-overlay/dist/css/index.css";
 export default defineComponent({
   data() {
     return {
-      screenMode: "summary",
+      screenMode: "title",
       isLoading: false,
       fullPage: true,
       answer: {
